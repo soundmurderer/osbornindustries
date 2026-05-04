@@ -1,0 +1,753 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OSBORN_INDUSTRIES_OS v1.0</title>
+<style>
+@font-face {
+  font-family: 'Fixedsys';
+  src: url('fonts/FSEX302.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --g0: #000000;
+  --g1: #001c08;
+  --g2: #003a10;
+  --g3: #006620;
+  --g4: #009933;
+  --g5: #00cc44;
+  --g6: #00ff55;
+  --font: 'Fixedsys', 'Courier New', monospace;
+  --fs: 16px;
+}
+
+html, body {
+  background: #0a0a0a;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 24px 16px;
+  font-family: var(--font);
+}
+
+/* ── OUTER SHELL ── */
+.os {
+  width: 100%;
+  max-width: 1100px;
+  background: var(--g0);
+  color: var(--g5);
+  font-family: var(--font);
+  font-size: var(--fs);
+  line-height: 1.35;
+  border: 2px solid var(--g5);
+  display: flex;
+  flex-direction: column;
+  min-height: 600px;
+  position: relative;
+  box-shadow: 0 0 32px rgba(0, 204, 68, 0.15), 0 0 80px rgba(0, 204, 68, 0.05);
+}
+
+/* phosphor scanlines */
+.os::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: repeating-linear-gradient(
+    to bottom,
+    transparent,
+    transparent 2px,
+    rgba(0, 0, 0, 0.09) 2px,
+    rgba(0, 0, 0, 0.09) 4px
+  );
+  z-index: 200;
+}
+
+/* ── TITLE BAR ── */
+.titlebar {
+  background: var(--g5);
+  color: var(--g0);
+  font-size: 15px;
+  padding: 2px 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  letter-spacing: 0.5px;
+  flex-shrink: 0;
+}
+
+/* ── PATH BAR ── */
+.pathbar {
+  background: var(--g1);
+  border-bottom: 1px solid var(--g5);
+  padding: 1px 10px;
+  font-size: 15px;
+  color: var(--g6);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  flex-shrink: 0;
+}
+
+/* ── THREE-PANE BODY ── */
+.body {
+  display: flex;
+  flex: 1;
+  min-height: 460px;
+  overflow: hidden;
+}
+
+/* ── PANE SHARED ── */
+.pane {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+.pane-tree  { width: 30%; border-right: 1px solid var(--g5); }
+.pane-detail{ width: 42%; border-right: 1px solid var(--g5); }
+.pane-insp  { width: 28%; }
+
+.pane-header {
+  background: var(--g1);
+  border-bottom: 1px solid var(--g5);
+  padding: 1px 8px;
+  font-size: 13px;
+  color: var(--g4);
+  letter-spacing: 1.5px;
+  flex-shrink: 0;
+}
+
+.pane-scroll {
+  flex: 1;
+  overflow-y: auto;
+  padding: 4px 0;
+  scrollbar-width: thin;
+  scrollbar-color: var(--g5) var(--g0);
+}
+.pane-scroll::-webkit-scrollbar { width: 5px; }
+.pane-scroll::-webkit-scrollbar-track { background: var(--g0); }
+.pane-scroll::-webkit-scrollbar-thumb { background: var(--g5); }
+
+.pane-inner {
+  padding: 6px 10px;
+}
+
+/* ── TREE ROWS ── */
+.trow {
+  display: flex;
+  align-items: center;
+  padding: 0 8px;
+  cursor: pointer;
+  white-space: nowrap;
+  font-size: 15px;
+  user-select: none;
+}
+.trow:hover { background: var(--g1); }
+.trow.sel   { background: var(--g5); color: var(--g0); }
+
+.trow .pipe { color: var(--g2); }
+.trow.sel .pipe { color: var(--g3); }
+.trow .ico  { color: var(--g4); margin: 0 3px; min-width: 28px; }
+.trow.sel .ico { color: var(--g1); }
+
+/* ── DETAIL / INSPECTOR SHARED ── */
+.sec-title {
+  color: var(--g6);
+  font-size: 13px;
+  letter-spacing: 1.5px;
+  border-bottom: 1px solid var(--g2);
+  padding-bottom: 1px;
+  margin: 10px 0 4px;
+}
+.sec-title:first-child { margin-top: 0; }
+
+.kv {
+  display: flex;
+  justify-content: space-between;
+  font-size: 14px;
+  margin: 2px 0;
+  gap: 8px;
+}
+.kv .k { color: var(--g4); white-space: nowrap; }
+.kv .v { color: var(--g6); text-align: right; word-break: break-all; }
+
+.desc-text {
+  font-size: 14px;
+  color: var(--g4);
+  line-height: 1.6;
+  margin: 4px 0 8px;
+}
+
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin-top: 4px;
+}
+.tag {
+  border: 1px solid var(--g2);
+  color: var(--g4);
+  font-size: 13px;
+  padding: 0 5px;
+}
+
+/* ── ASCII/IMAGE HOVER BLOCK ── */
+.img-wrap {
+  position: relative;
+  width: 100%;
+  height: 80px;
+  margin: 8px 0;
+  overflow: hidden;
+  cursor: default;
+  border: 1px solid var(--g2);
+  background: var(--g1);
+}
+.img-ascii {
+  position: absolute;
+  inset: 0;
+  font-size: 6.5px;
+  line-height: 1.07;
+  letter-spacing: 1.2px;
+  color: var(--g5);
+  white-space: pre;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.4s;
+  font-family: var(--font);
+}
+.img-real {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.4s;
+  background: var(--g0);
+}
+.img-wrap:hover .img-ascii { opacity: 0; }
+.img-wrap:hover .img-real  { opacity: 1; }
+.img-real img {
+  max-height: 78px;
+  max-width: 100%;
+  object-fit: contain;
+}
+.img-hint {
+  position: absolute;
+  bottom: 2px;
+  right: 4px;
+  font-size: 11px;
+  color: var(--g3);
+  pointer-events: none;
+}
+.img-wrap:hover .img-hint { display: none; }
+
+/* ── PROJECT LINK ── */
+.proj-link {
+  display: inline-block;
+  margin-top: 8px;
+  font-size: 14px;
+  color: var(--g6);
+  text-decoration: none;
+  border-bottom: 1px solid var(--g3);
+}
+.proj-link:hover { background: var(--g5); color: var(--g0); }
+
+/* ── PLACEHOLDER ── */
+.placeholder {
+  color: var(--g2);
+  font-size: 15px;
+  padding: 40px 10px;
+  text-align: center;
+  line-height: 2.2;
+}
+
+/* ── DISK STATS (right side of detail pane, mimics XTree) ── */
+.disk-stats {
+  border: 1px solid var(--g2);
+  padding: 6px 8px;
+  margin-top: 8px;
+  background: var(--g1);
+}
+.disk-stats .ds-title {
+  color: var(--g6);
+  font-size: 12px;
+  letter-spacing: 1px;
+  margin-bottom: 4px;
+  border-bottom: 1px solid var(--g2);
+}
+
+/* ── STATUS BAR ── */
+.statbar {
+  border-top: 1px solid var(--g5);
+  padding: 2px 10px;
+  font-size: 13px;
+  color: var(--g4);
+  display: flex;
+  gap: 20px;
+  background: var(--g0);
+  flex-wrap: wrap;
+  flex-shrink: 0;
+}
+.statbar .hi { color: var(--g6); }
+
+/* ── COMMAND BAR ── */
+.cmdbar {
+  background: var(--g1);
+  border-top: 1px solid var(--g2);
+  padding: 2px 10px;
+  font-size: 13px;
+  color: var(--g3);
+  letter-spacing: 0.5px;
+  flex-shrink: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 16px;
+}
+.cmdbar b { color: var(--g5); }
+</style>
+</head>
+<body>
+
+<div class="os">
+
+  <div class="titlebar">
+    <span>OSBORN_INDUSTRIES_OS&nbsp;&nbsp;v1.0</span>
+    <span id="clock">--:--:--</span>
+  </div>
+
+  <div class="pathbar" id="pathbar">Path: C:\OSBORN_INDUSTRIES\</div>
+
+  <div class="body">
+
+    <!-- LEFT: TREE -->
+    <div class="pane pane-tree">
+      <div class="pane-header">[ DIRECTORY ]</div>
+      <div class="pane-scroll" id="tree"></div>
+    </div>
+
+    <!-- MIDDLE: DETAIL -->
+    <div class="pane pane-detail">
+      <div class="pane-header">[ PROJECT DETAIL ]</div>
+      <div class="pane-scroll">
+        <div class="pane-inner" id="detail">
+          <div class="placeholder">SELECT A PROJECT<br>FROM THE TREE</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- RIGHT: INSPECTOR -->
+    <div class="pane pane-insp">
+      <div class="pane-header">[ INSPECTOR ]</div>
+      <div class="pane-scroll">
+        <div class="pane-inner" id="insp">
+          <div class="placeholder">NO FILE<br>SELECTED</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="statbar">
+    <span>PROJECTS:&nbsp;<span class="hi" id="pc">0</span></span>
+    <span>TOTAL:&nbsp;<span class="hi" id="pb">0 MB</span></span>
+    <span>DISK:&nbsp;<span class="hi">C:\OSBORN_INDUSTRIES</span></span>
+    <span>AVAIL:&nbsp;<span class="hi">&#8734;</span></span>
+  </div>
+
+  <div class="cmdbar">
+    <span><b>CLICK</b> select</span>
+    <span><b>ENTER</b> expand/collapse</span>
+    <span><b>HOVER&nbsp;IMG</b> reveal screenshot</span>
+    <span><b>F1</b> about</span>
+  </div>
+
+</div>
+
+<script>
+// ── ASCII ART BLOCKS ──────────────────────────────────────────────
+const ASCII = {
+  app: `
+  ____  ____  ____
+ /    \/    \/    \\
+|  /\  |  /\  |  /\  |
+|_/  \_|_/  \_|_/  \_|
+ __|  |__ __|  |__ __|
+|__    __|__    __|__|
+   |__|      |__|    `,
+
+  tool: `
+ _____  ___   ___  _
+|_   _|/ _ \ / _ \| |
+  | | | | | | | | | |
+  | | | |_| | |_| | |___
+  |_|  \___/ \___/|_____|`,
+
+  audio: `
+  /\\  /\\ |\\  /| /\\  /\\
+ /  \\/  \\ \\ \\/ //  \\/  \\
+/    \\    \\    /|    \\    |
+\\    /    /    \\\\    /    /
+ \\__/\\__/ \\__/\\/\\__/\\__/ `,
+
+  game: `
+  ___   _   __  __ ___
+ / __| /_\\ |  \\/  | __|
+| (_ |/ _ \\| |\\/| | _|
+ \\___/_/ \\_\\_|  |_|___|`,
+
+  ai: `
+  /\\  |
+ /  \\ |
+/ /\\ \\|
+/_/  \\_\\__`,
+
+  hw: `
+ _  _ __    __
+| || |\ \\  / /
+| __ | \\ \\/ /
+|_||_|  \\__/ `,
+};
+
+// ── PROJECT DATA ─────────────────────────────────────────────────
+const TREE = [
+  { id:'osborn', label:'OSBORN_INDUSTRIES', type:'root', created:'01-01-2023', modified:'05-04-2026', children:[
+    { id:'android', label:'ANDROID', type:'folder', created:'01-01-2023', modified:'05-04-2026', children:[
+      {
+        id:'slitherlink', label:'SLITHERLINK.APK', type:'project', ascii:'app',
+        img:'img/slitherlink.jpg',
+        desc:'Logic loop puzzle game for Android. 120+ handcrafted puzzles across four difficulty tiers. Features an in-app authoring tool, pinch-zoom canvas, and a Check button for mid-solve player feedback. Published on Google Play under Osborn Industries.',
+        tags:['Android','Kotlin','Jetpack Compose','Play Store','Puzzle'],
+        status:'LIVE', platform:'Android', size:'14.2 MB',
+        created:'09-10-2024', modified:'04-28-2026', ver:'1.3.0',
+        link:'https://play.google.com/store/apps/details?id=com.osbornindustries.slitherlink'
+      },
+      {
+        id:'oot', label:'OOT_COMPANION.APK', type:'project', ascii:'game',
+        img:'img/oot.jpg',
+        desc:'Personal companion app for an Ocarina of Time 100% playthrough. Live dashboard, SVG dungeon maps, songs tab, full checklist with completion tracking, progressive hint reveal, and JSON backup/restore.',
+        tags:['Android','Kotlin','Jetpack Compose','Room','Hilt'],
+        status:'PERSONAL', platform:'Android', size:'8.7 MB',
+        created:'06-14-2024', modified:'10-02-2024', ver:'1.0.0',
+        link:null
+      },
+      {
+        id:'hyperion', label:'HYPERION_FIELD.APK', type:'project', ascii:'app',
+        img:'img/hyperion.jpg',
+        desc:'Mobile sales field tool built for Hyperion Coffee, Ann Arbor. Six tabs: accounts, pipeline, roast data, catalog, Google Maps scouting, and export. Delivered as a standalone APK via Capacitor.',
+        tags:['Android','Capacitor','Client Work','Coffee','Maps'],
+        status:'DELIVERED', platform:'Android', size:'11.1 MB',
+        created:'03-05-2024', modified:'04-12-2024', ver:'2.0.0',
+        link:null
+      },
+      {
+        id:'hfspaces', label:'HF_SPACES.APK', type:'project', ascii:'ai',
+        img:'img/hfspaces.jpg',
+        desc:'Android wrapper for two private HuggingFace Spaces — a Qwen 3D image viewer and an AudioSR upscaler. GitHub Actions build pipeline, persistent HF login, custom branded splash screen.',
+        tags:['Android','HuggingFace','GitHub Actions','AI','AudioSR'],
+        status:'PERSONAL', platform:'Android', size:'6.3 MB',
+        created:'11-20-2023', modified:'02-14-2024', ver:'1.1.0',
+        link:null
+      },
+    ]},
+    { id:'windows', label:'WINDOWS', type:'folder', created:'01-01-2023', modified:'05-04-2026', children:[
+      {
+        id:'bpmtagger', label:'BPM_TAGGER.EXE', type:'project', ascii:'audio',
+        img:'img/bpmtagger.jpg',
+        desc:'Windows desktop tool for BPM detection and MP3 tag writing. Custom numpy/scipy five-band filterbank replaces librosa for speed and portability. Bundled as a standalone EXE with embedded ffmpeg — no install required.',
+        tags:['Windows','Python','PyInstaller','Audio','MP3','ffmpeg'],
+        status:'RELEASED', platform:'Windows x64', size:'38.4 MB',
+        created:'01-08-2025', modified:'03-15-2025', ver:'1.0.2',
+        link:null
+      },
+      {
+        id:'ast2xrns', label:'AST2XRNS.EXE', type:'project', ascii:'tool',
+        img:'img/ast2xrns.jpg',
+        desc:'Converts AST tracker files to Renoise .xrns format. Resolves hidden Finetune pitch sharpness, 239/240 tempo drift correction, and SHABS8 sample corruption via WAV override. GUI with embedded skeleton template and per-conversion FX report.',
+        tags:['Windows','Python','Renoise','Tracker','Audio'],
+        status:'PERSONAL', platform:'Windows x64', size:'22.1 MB',
+        created:'07-19-2024', modified:'12-03-2024', ver:'2.4.1',
+        link:null
+      },
+      {
+        id:'flac2mp3', label:'FLAC_TO_MP3.EXE', type:'project', ascii:'audio',
+        img:'img/flac2mp3.jpg',
+        desc:'Batch FLAC-to-MP3 desktop converter. Python/tkinter frontend, ffmpeg backend, PyInstaller bundle. Drag-and-drop input. Greyscale Osborn Industries branding.',
+        tags:['Windows','Python','ffmpeg','Audio','FLAC'],
+        status:'PERSONAL', platform:'Windows x64', size:'19.8 MB',
+        created:'04-22-2024', modified:'05-10-2024', ver:'1.0.0',
+        link:null
+      },
+    ]},
+    { id:'web', label:'WEB', type:'folder', created:'01-01-2024', modified:'05-04-2026', children:[
+      {
+        id:'research', label:'RESEARCH_TOOL.HTML', type:'project', ascii:'ai',
+        img:'img/research.jpg',
+        desc:'Single-file browser research tool. Dark industrial UI. Uses Claude API for automated claim extraction and Semantic Scholar for literature retrieval. Supports PDF, DOCX, and plain text upload with drag-and-drop and color-coded evidence classification.',
+        tags:['HTML','Claude API','Semantic Scholar','PDF','Research'],
+        status:'INTERNAL', platform:'Browser', size:'0.9 MB',
+        created:'10-05-2024', modified:'01-20-2025', ver:'1.2.0',
+        link:null
+      },
+    ]},
+    { id:'hardware', label:'HARDWARE', type:'folder', created:'01-01-2023', modified:'05-04-2026', children:[
+      {
+        id:'robot', label:'ROBOT_AUDIO_ARRAY', type:'project', ascii:'hw',
+        img:'img/robot.jpg',
+        desc:'Dog-platform robot with a custom beamforming microphone array and directional speaker-tracking display. DSP pipeline for live source localization. Client robotics and audio project.',
+        tags:['Hardware','DSP','Beamforming','Robotics','Client Work'],
+        status:'IN PROGRESS', platform:'Embedded / Linux', size:'—',
+        created:'08-14-2024', modified:'05-04-2026', ver:'—',
+        link:null
+      },
+      {
+        id:'fmtx', label:'FM_TRANSMITTER.PCB', type:'project', ascii:'hw',
+        img:'img/fmtx.jpg',
+        desc:'DIY solar-powered autonomous FM radio transmitter. MP3 playback, FCC Part 15 compliant. Custom PCB layout designed for unattended outdoor deployment.',
+        tags:['Hardware','PCB','Solar','FM','FCC Part 15'],
+        status:'DESIGN', platform:'Custom PCB', size:'—',
+        created:'12-01-2024', modified:'03-10-2025', ver:'rev B',
+        link:null
+      },
+    ]},
+  ]}
+];
+
+// ── STATUS COLORS ─────────────────────────────────────────────────
+const STATUS_C = {
+  'LIVE':        '#00ff55',
+  'RELEASED':    '#00ff55',
+  'DELIVERED':   '#00cc44',
+  'PERSONAL':    '#009933',
+  'INTERNAL':    '#009933',
+  'IN PROGRESS': '#ffcc00',
+  'DESIGN':      '#ffaa00',
+};
+
+// ── STATE ─────────────────────────────────────────────────────────
+let expanded = new Set(['osborn','android','windows','web','hardware']);
+let selected = null;
+let flatCache = [];
+
+// ── TREE HELPERS ──────────────────────────────────────────────────
+function flatten(nodes, depth = 0, res = []) {
+  for (const n of nodes) {
+    res.push({ ...n, depth });
+    if (n.children && expanded.has(n.id)) flatten(n.children, depth + 1, res);
+  }
+  return res;
+}
+
+function isLast(node, flat) {
+  const i = flat.indexOf(node);
+  const next = flat.slice(i + 1).find(n => n.depth <= node.depth);
+  return !next || next.depth < node.depth;
+}
+
+function treePrefix(node, flat) {
+  if (node.depth === 0) return '';
+  let p = '';
+  for (let i = 1; i < node.depth; i++) p += '│  ';
+  p += isLast(node, flat) ? '└─' : '├─';
+  return p;
+}
+
+function treeIcon(node) {
+  if (node.type === 'project') return '   ';
+  return expanded.has(node.id) ? '[-]' : '[+]';
+}
+
+// ── RENDER TREE ───────────────────────────────────────────────────
+function renderTree() {
+  flatCache = flatten(TREE);
+  const projs = flatCache.filter(n => n.type === 'project');
+  document.getElementById('pc').textContent = projs.length;
+  const mb = projs.reduce((a, n) => a + (parseFloat(n.size) || 0), 0);
+  document.getElementById('pb').textContent = mb.toFixed(1) + ' MB';
+
+  const el = document.getElementById('tree');
+  el.innerHTML = '';
+
+  flatCache.forEach(node => {
+    const row = document.createElement('div');
+    row.className = 'trow' + (selected === node.id ? ' sel' : '');
+    row.innerHTML =
+      `<span class="pipe">${treePrefix(node, flatCache)}</span>` +
+      `<span class="ico">${treeIcon(node)}</span>` +
+      `<span>${node.label}</span>`;
+
+    row.addEventListener('click', () => {
+      if (node.type !== 'project') {
+        expanded.has(node.id) ? expanded.delete(node.id) : expanded.add(node.id);
+      }
+      selected = node.id;
+      renderTree();
+
+      // Update path bar
+      const parts = ['C:', 'OSBORN_INDUSTRIES'];
+      if (node.depth > 0) {
+        flatCache
+          .filter(n => n.depth > 0 && n.depth < node.depth)
+          .forEach(a => parts.push(a.label));
+        parts.push(node.label);
+      }
+      document.getElementById('pathbar').textContent =
+        'Path: ' + parts.join('\\') + (node.type !== 'project' ? '\\' : '');
+
+      node.type === 'project' ? renderProject(node) : renderFolder(node);
+    });
+
+    el.appendChild(row);
+  });
+}
+
+// ── FAKE PLACEHOLDER IMAGE (if no real img yet) ───────────────────
+function placeholderSvg(label) {
+  const svg = `<svg xmlns='http://www.w3.org/2000/svg' width='200' height='78'>
+    <rect width='200' height='78' fill='%23001a08'/>
+    <text x='100' y='32' font-family='monospace' font-size='11' fill='%2300cc44' text-anchor='middle'>[NO SCREENSHOT]</text>
+    <text x='100' y='50' font-family='monospace' font-size='10' fill='%23005522' text-anchor='middle'>${encodeURIComponent(label)}</text>
+    <text x='100' y='66' font-family='monospace' font-size='9' fill='%23003a10' text-anchor='middle'>add to img/ folder</text>
+  </svg>`;
+  return 'data:image/svg+xml,' + svg;
+}
+
+// ── RENDER PROJECT ────────────────────────────────────────────────
+function renderProject(node) {
+  const sc = STATUS_C[node.status] || '#00cc44';
+  const asciiArt = ASCII[node.ascii] || ASCII.app;
+  const imgSrc = node.img || '';
+
+  document.getElementById('detail').innerHTML = `
+    <div class="sec-title">OVERVIEW</div>
+    <div class="img-wrap">
+      <div class="img-ascii">${escHtml(asciiArt)}</div>
+      <div class="img-real">
+        <img src="${imgSrc}"
+             onerror="this.src='${placeholderSvg(node.label)}'"
+             alt="${node.label}" />
+      </div>
+      <span class="img-hint">HOVER TO REVEAL</span>
+    </div>
+    <div class="desc-text">${escHtml(node.desc)}</div>
+    <div class="sec-title">TAGS</div>
+    <div class="tags">${node.tags.map(t => `<span class="tag">${escHtml(t)}</span>`).join('')}</div>
+    ${node.link ? `<a class="proj-link" href="${node.link}" target="_blank" rel="noopener">&#9658; VIEW ON PLAY STORE</a>` : ''}
+  `;
+
+  document.getElementById('insp').innerHTML = `
+    <div class="sec-title">FILE INFO</div>
+    <div class="kv"><span class="k">NAME</span><span class="v">${escHtml(node.label)}</span></div>
+    <div class="kv"><span class="k">SIZE</span><span class="v">${escHtml(node.size)}</span></div>
+    <div class="kv"><span class="k">VERSION</span><span class="v">${escHtml(node.ver)}</span></div>
+    <div class="kv"><span class="k">CREATED</span><span class="v">${escHtml(node.created)}</span></div>
+    <div class="kv"><span class="k">MODIFIED</span><span class="v">${escHtml(node.modified)}</span></div>
+    <div class="sec-title">STATUS</div>
+    <div class="kv"><span class="k">STATUS</span><span class="v" style="color:${sc}">${escHtml(node.status)}</span></div>
+    <div class="kv"><span class="k">PLATFORM</span><span class="v">${escHtml(node.platform)}</span></div>
+    <div class="sec-title">DISK</div>
+    <div class="kv"><span class="k">VOLUME</span><span class="v">C:\\OSBORN</span></div>
+    <div class="kv"><span class="k">ATTRIB</span><span class="v">..a.</span></div>
+    <div class="kv"><span class="k">TYPE</span><span class="v">${escHtml(node.label.split('.').pop())}</span></div>
+    <div class="sec-title">DISK STATS</div>
+    <div class="kv"><span class="k">TOTAL FILES</span><span class="v">${flatCache.filter(n=>n.type==='project').length}</span></div>
+    <div class="kv"><span class="k">TOTAL BYTES</span><span class="v">${document.getElementById('pb').textContent}</span></div>
+    <div class="kv"><span class="k">MATCHING</span><span class="v">1</span></div>
+    <div class="kv"><span class="k">TAGGED</span><span class="v">${escHtml(node.tags.length.toString())}</span></div>
+  `;
+}
+
+// ── RENDER FOLDER ─────────────────────────────────────────────────
+function renderFolder(node) {
+  const children = node.children || [];
+  const projs = children.filter(c => c.type === 'project');
+  const dirs  = children.filter(c => c.type === 'folder');
+
+  document.getElementById('detail').innerHTML = `
+    <div class="sec-title">DIRECTORY</div>
+    <div class="desc-text">Select a project from the tree to view its description and details.</div>
+    <div class="sec-title">CONTENTS</div>
+    ${children.map(c =>
+      `<div class="kv">
+        <span class="k">${c.type === 'folder' ? '[DIR]' : '     '}</span>
+        <span class="v">${escHtml(c.label)}</span>
+      </div>`
+    ).join('')}
+  `;
+
+  document.getElementById('insp').innerHTML = `
+    <div class="sec-title">DIR INFO</div>
+    <div class="kv"><span class="k">NAME</span><span class="v">${escHtml(node.label)}</span></div>
+    <div class="kv"><span class="k">FILES</span><span class="v">${projs.length}</span></div>
+    <div class="kv"><span class="k">SUBDIRS</span><span class="v">${dirs.length}</span></div>
+    <div class="kv"><span class="k">CREATED</span><span class="v">${escHtml(node.created || '—')}</span></div>
+    <div class="kv"><span class="k">MODIFIED</span><span class="v">${escHtml(node.modified || '—')}</span></div>
+    <div class="sec-title">DISK</div>
+    <div class="kv"><span class="k">VOLUME</span><span class="v">C:\\OSBORN</span></div>
+    <div class="kv"><span class="k">ATTRIB</span><span class="v">d...</span></div>
+    <div class="sec-title">DISK STATS</div>
+    <div class="kv"><span class="k">TOTAL FILES</span><span class="v">${flatCache.filter(n=>n.type==='project').length}</span></div>
+    <div class="kv"><span class="k">TOTAL BYTES</span><span class="v">${document.getElementById('pb').textContent}</span></div>
+  `;
+}
+
+// ── UTILS ─────────────────────────────────────────────────────────
+function escHtml(s) {
+  if (s === null || s === undefined) return '';
+  return String(s)
+    .replace(/&/g,'&amp;')
+    .replace(/</g,'&lt;')
+    .replace(/>/g,'&gt;')
+    .replace(/"/g,'&quot;');
+}
+
+// ── CLOCK ─────────────────────────────────────────────────────────
+function tick() {
+  const n = new Date();
+  const p = v => String(v).padStart(2, '0');
+  document.getElementById('clock').textContent =
+    `${p(n.getMonth()+1)}-${p(n.getDate())}-${n.getFullYear()}  ${p(n.getHours())}:${p(n.getMinutes())}:${p(n.getSeconds())}`;
+}
+
+// ── F1 ABOUT ──────────────────────────────────────────────────────
+document.addEventListener('keydown', e => {
+  if (e.key === 'F1') {
+    e.preventDefault();
+    document.getElementById('detail').innerHTML = `
+      <div class="sec-title">ABOUT</div>
+      <div class="desc-text">
+        OSBORN_INDUSTRIES_OS  v1.0<br><br>
+        Independent software and hardware development.<br>
+        Android apps, Windows desktop tools,<br>
+        audio engineering, and electronics.<br><br>
+        github.com/soundmurderer<br>
+        huggingface.co/soundmurderer
+      </div>
+    `;
+    document.getElementById('insp').innerHTML = `
+      <div class="sec-title">SYSTEM</div>
+      <div class="kv"><span class="k">OS</span><span class="v">OSBORN OS v1.0</span></div>
+      <div class="kv"><span class="k">BUILD</span><span class="v">2026.05.04</span></div>
+      <div class="kv"><span class="k">AUTHOR</span><span class="v">OSBORN IND.</span></div>
+    `;
+  }
+});
+
+// ── INIT ──────────────────────────────────────────────────────────
+renderTree();
+tick();
+setInterval(tick, 1000);
+</script>
+</body>
+</html>
