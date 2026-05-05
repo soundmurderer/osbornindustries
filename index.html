@@ -19,19 +19,21 @@
 }
 
 :root {
-  --g0: #000000;
-  --g1: #001c08;
-  --g2: #003a10;
-  --g3: #006620;
-  --g4: #009933;
-  --g5: #00cc44;
-  --g6: #00ff55;
+  --g0: #000028;        /* deep navy background */
+  --g1: #00003a;        /* panel background */
+  --g2: #000066;        /* subtle borders / dim elements */
+  --g3: #0000aa;        /* mid blue — pipes, inactive */
+  --g4: #5555ff;        /* secondary text, labels */
+  --g5: #00aaaa;        /* primary cyan — borders, titles, tree */
+  --g6: #55ffff;        /* bright cyan — highlights, values */
+  --hi: #ffffff;        /* white — selected row text */
+  --sel-bg: #00aaaa;    /* selected row background */
   --font: 'Fixedsys', 'Courier New', monospace;
   --fs: 16px;
 }
 
 html, body {
-  background: #000;
+  background: #000028;
   width: 100%;
   height: 100%;
   margin: 0;
@@ -79,8 +81,8 @@ body {
 
 /* ── TITLE BAR ── */
 .titlebar {
-  background: var(--g5);
-  color: var(--g0);
+  background: var(--g3);
+  color: var(--hi);
   font-size: 15px;
   padding: 2px 10px;
   display: flex;
@@ -88,6 +90,7 @@ body {
   align-items: center;
   letter-spacing: 0.5px;
   flex-shrink: 0;
+  border-bottom: 1px solid var(--g5);
 }
 
 /* ── PATH BAR ── */
@@ -122,11 +125,11 @@ body {
 .pane-insp  { width: 28%; }
 
 .pane-header {
-  background: var(--g1);
+  background: var(--g3);
   border-bottom: 1px solid var(--g5);
   padding: 1px 8px;
   font-size: 13px;
-  color: var(--g4);
+  color: var(--g6);
   letter-spacing: 1.5px;
   flex-shrink: 0;
 }
@@ -156,20 +159,20 @@ body {
   font-size: 15px;
   user-select: none;
 }
-.trow:hover { background: var(--g1); }
-.trow.sel   { background: var(--g5); color: var(--g0); }
+.trow:hover { background: var(--g2); }
+.trow.sel   { background: var(--g5); color: #000028; }
 
-.trow .pipe { color: var(--g2); }
-.trow.sel .pipe { color: var(--g3); }
-.trow .ico  { color: var(--g4); margin: 0 3px; min-width: 28px; }
-.trow.sel .ico { color: var(--g1); }
+.trow .pipe { color: var(--g4); }
+.trow.sel .pipe { color: var(--g2); }
+.trow .ico  { color: var(--g6); margin: 0 3px; min-width: 28px; }
+.trow.sel .ico { color: #000028; }
 
 /* ── DETAIL / INSPECTOR SHARED ── */
 .sec-title {
   color: var(--g6);
   font-size: 13px;
   letter-spacing: 1.5px;
-  border-bottom: 1px solid var(--g2);
+  border-bottom: 1px solid var(--g3);
   padding-bottom: 1px;
   margin: 10px 0 4px;
 }
@@ -182,12 +185,12 @@ body {
   margin: 2px 0;
   gap: 8px;
 }
-.kv .k { color: var(--g4); white-space: nowrap; }
+.kv .k { color: var(--g5); white-space: nowrap; }
 .kv .v { color: var(--g6); text-align: right; word-break: break-all; }
 
 .desc-text {
   font-size: 14px;
-  color: var(--g4);
+  color: var(--g5);
   line-height: 1.6;
   margin: 4px 0 8px;
 }
@@ -199,8 +202,8 @@ body {
   margin-top: 4px;
 }
 .tag {
-  border: 1px solid var(--g2);
-  color: var(--g4);
+  border: 1px solid var(--g4);
+  color: var(--g5);
   font-size: 13px;
   padding: 0 5px;
 }
@@ -212,7 +215,7 @@ body {
   height: 80px;
   margin: 8px 0;
   cursor: crosshair;
-  border: 1px solid var(--g2);
+  border: 1px solid var(--g4);
   background: var(--g1);
   overflow: hidden;
 }
@@ -251,7 +254,7 @@ body {
   z-index: 999;
   border: 1px solid var(--g5);
   background: var(--g0);
-  box-shadow: 0 0 24px rgba(0,204,68,0.3);
+  box-shadow: 0 0 24px rgba(0,170,170,0.4);
   padding: 4px;
 }
 #img-float img {
@@ -263,7 +266,7 @@ body {
 #img-float .float-label {
   font-family: var(--font);
   font-size: 12px;
-  color: var(--g4);
+  color: var(--g6);
   padding: 3px 2px 1px;
   letter-spacing: 1px;
 }
@@ -275,22 +278,22 @@ body {
   font-size: 14px;
   color: var(--g6);
   text-decoration: none;
-  border-bottom: 1px solid var(--g3);
+  border-bottom: 1px solid var(--g4);
 }
 .proj-link:hover { background: var(--g5); color: var(--g0); }
 
 /* ── PLACEHOLDER ── */
 .placeholder {
-  color: var(--g2);
+  color: var(--g4);
   font-size: 15px;
   padding: 40px 10px;
   text-align: center;
   line-height: 2.2;
 }
 
-/* ── DISK STATS (right side of detail pane, mimics XTree) ── */
+/* ── DISK STATS ── */
 .disk-stats {
-  border: 1px solid var(--g2);
+  border: 1px solid var(--g3);
   padding: 6px 8px;
   margin-top: 8px;
   background: var(--g1);
@@ -300,7 +303,7 @@ body {
   font-size: 12px;
   letter-spacing: 1px;
   margin-bottom: 4px;
-  border-bottom: 1px solid var(--g2);
+  border-bottom: 1px solid var(--g3);
 }
 
 /* ── STATUS BAR ── */
@@ -308,10 +311,10 @@ body {
   border-top: 1px solid var(--g5);
   padding: 2px 10px;
   font-size: 13px;
-  color: var(--g4);
+  color: var(--g5);
   display: flex;
   gap: 20px;
-  background: var(--g0);
+  background: var(--g3);
   flex-wrap: wrap;
   flex-shrink: 0;
 }
@@ -319,18 +322,18 @@ body {
 
 /* ── COMMAND BAR ── */
 .cmdbar {
-  background: var(--g1);
-  border-top: 1px solid var(--g2);
+  background: var(--g3);
+  border-top: 1px solid var(--g5);
   padding: 2px 10px;
   font-size: 13px;
-  color: var(--g3);
+  color: var(--g6);
   letter-spacing: 0.5px;
   flex-shrink: 0;
   display: flex;
   flex-wrap: wrap;
   gap: 4px 16px;
 }
-.cmdbar b { color: var(--g5); }
+.cmdbar b { color: #ffffff; }
 </style>
 </head>
 <body>
@@ -565,12 +568,12 @@ const TREE = [
 
 // ── STATUS COLORS ─────────────────────────────────────────────────
 const STATUS_C = {
-  'LIVE':        '#00ff55',
-  'RELEASED':    '#00ff55',
-  'DELIVERED':   '#00cc44',
-  'PERSONAL':    '#009933',
-  'INTERNAL':    '#009933',
-  'IN PROGRESS': '#ffcc00',
+  'LIVE':        '#55ffff',
+  'RELEASED':    '#55ffff',
+  'DELIVERED':   '#00aaaa',
+  'PERSONAL':    '#5555ff',
+  'INTERNAL':    '#5555ff',
+  'IN PROGRESS': '#ffff55',
   'DESIGN':      '#ffaa00',
 };
 
