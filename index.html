@@ -413,46 +413,89 @@ body {
 <script>
 // ── ASCII ART BLOCKS ──────────────────────────────────────────────
 const ASCII = {
-  app: `
-  ____  ____  ____
- /    \/    \/    \\
-|  /\  |  /\  |  /\  |
-|_/  \_|_/  \_|_/  \_|
- __|  |__ __|  |__ __|
-|__    __|__    __|__|
-   |__|      |__|    `,
+  slitherlink: ` ███████╗██╗     ██╗████████╗██╗  ██╗███████╗██████╗ ██╗     ██╗███╗   ██╗██╗  ██╗
+ ██╔════╝██║     ██║╚══██╔══╝██║  ██║██╔════╝██╔══██╗██║     ██║████╗  ██║██║ ██╔╝
+ ███████╗██║     ██║   ██║   ███████║█████╗  ██████╔╝██║     ██║██╔██╗ ██║█████╔╝ 
+ ╚════██║██║     ██║   ██║   ██╔══██║██╔══╝  ██╔══██╗██║     ██║██║╚██╗██║██╔═██╗ 
+ ███████║███████╗██║   ██║   ██║  ██║███████╗██║  ██║███████╗██║██║ ╚████║██║  ██╗
+ ╚══════╝╚══════╝╚═╝   ╚═╝   ╚═╝  ╚═╝╚══════╝╚═╝  ╚═╝╚══════╝╚═╝╚═╝  ╚═══╝╚═╝  ╚═╝`,
 
-  tool: `
- _____  ___   ___  _
-|_   _|/ _ \ / _ \| |
-  | | | | | | | | | |
-  | | | |_| | |_| | |___
-  |_|  \___/ \___/|_____|`,
+  oot: `  ██████╗  ██████╗ ████████╗     ██████╗ ██████╗ ███╗   ███╗██████╗  █████╗ ███╗   ██╗
+ ██╔═══██╗██╔═══██╗╚══██╔══╝    ██╔════╝██╔═══██╗████╗ ████║██╔══██╗██╔══██╗████╗  ██║
+ ██║   ██║██║   ██║   ██║       ██║     ██║   ██║██╔████╔██║██████╔╝███████║██╔██╗ ██║
+ ██║   ██║██║   ██║   ██║       ██║     ██║   ██║██║╚██╔╝██║██╔═══╝ ██╔══██║██║╚██╗██║
+  ██████╔╝╚██████╔╝   ██║       ╚██████╗╚██████╔╝██║ ╚═╝ ██║██║     ██║  ██║██║ ╚████║
+  ╚═════╝  ╚═════╝    ╚═╝        ╚═════╝ ╚═════╝ ╚═╝     ╚═╝╚═╝     ╚═╝  ╚═╝╚═╝  ╚═══╝`,
 
-  audio: `
-  /\\  /\\ |\\  /| /\\  /\\
- /  \\/  \\ \\ \\/ //  \\/  \\
-/    \\    \\    /|    \\    |
-\\    /    /    \\\\    /    /
- \\__/\\__/ \\__/\\/\\__/\\__/ `,
+  hyperion: ` ██╗  ██╗██╗   ██╗██████╗ ███████╗██████╗ ██╗ ██████╗ ███╗   ██╗    ███████╗██╗███████╗██╗     ██████╗ 
+ ██║  ██║╚██╗ ██╔╝██╔══██╗██╔════╝██╔══██╗██║██╔═══██╗████╗  ██║    ██╔════╝██║██╔════╝██║     ██╔══██╗
+ ███████║ ╚████╔╝ ██████╔╝█████╗  ██████╔╝██║██║   ██║██╔██╗ ██║    █████╗  ██║█████╗  ██║     ██║  ██║
+ ██╔══██║  ╚██╔╝  ██╔═══╝ ██╔══╝  ██╔══██╗██║██║   ██║██║╚██╗██║    ██╔══╝  ██║██╔══╝  ██║     ██║  ██║
+ ██║  ██║   ██║   ██║     ███████╗██║  ██║██║╚██████╔╝██║ ╚████║    ██║     ██║███████╗███████╗██████╔╝
+ ╚═╝  ╚═╝   ╚═╝   ╚═╝     ╚══════╝╚═╝  ╚═╝╚═╝ ╚═════╝ ╚═╝  ╚═══╝    ╚═╝     ╚═╝╚══════╝╚══════╝╚═════╝ `,
 
-  game: `
-  ___   _   __  __ ___
- / __| /_\\ |  \\/  | __|
-| (_ |/ _ \\| |\\/| | _|
- \\___/_/ \\_\\_|  |_|___|`,
+  hfspaces: `  ██╗  ██╗███████╗    ███████╗██████╗  █████╗  ██████╗███████╗███████╗
+  ██║  ██║██╔════╝    ██╔════╝██╔══██╗██╔══██╗██╔════╝██╔════╝██╔════╝
+  ███████║█████╗      ███████╗██████╔╝███████║██║     █████╗  ███████╗
+  ██╔══██║██╔══╝      ╚════██║██╔═══╝ ██╔══██║██║     ██╔══╝  ╚════██║
+  ██║  ██║██║         ███████║██║     ██║  ██║╚██████╗███████╗███████║
+  ╚═╝  ╚═╝╚═╝         ╚══════╝╚═╝     ╚═╝  ╚═╝ ╚═════╝╚══════╝╚══════╝`,
 
-  ai: `
-  /\\  |
- /  \\ |
-/ /\\ \\|
-/_/  \\_\\__`,
+  bitrateVerifier: ` ██████╗ ██╗████████╗██████╗  █████╗ ████████╗███████╗    ██╗   ██╗███████╗██████╗ ██╗███████╗██╗███████╗██████╗ 
+ ██╔══██╗██║╚══██╔══╝██╔══██╗██╔══██╗╚══██╔══╝██╔════╝    ██║   ██║██╔════╝██╔══██╗██║██╔════╝██║██╔════╝██╔══██╗
+ ██████╔╝██║   ██║   ██████╔╝███████║   ██║   █████╗      ██║   ██║█████╗  ██████╔╝██║█████╗  ██║█████╗  ██████╔╝
+ ██╔══██╗██║   ██║   ██╔══██╗██╔══██║   ██║   ██╔══╝      ╚██╗ ██╔╝██╔══╝  ██╔══██╗██║██╔══╝  ██║██╔══╝  ██╔══██╗
+ ██████╔╝██║   ██║   ██║  ██║██║  ██║   ██║   ███████╗     ╚████╔╝ ███████╗██║  ██║██║███████╗██║███████╗██║  ██║
+ ╚═════╝ ╚═╝   ╚═╝   ╚═╝  ╚═╝╚═╝  ╚═╝   ╚═╝   ╚══════╝      ╚═══╝  ╚══════╝╚═╝  ╚═╝╚═╝╚══════╝╚═╝╚══════╝╚═╝  ╚═╝`,
 
-  hw: `
- _  _ __    __
-| || |\ \\  / /
-| __ | \\ \\/ /
-|_||_|  \\__/ `,
+  bpmtagger: ` ██████╗ ██████╗ ███╗   ███╗    ████████╗ █████╗  ██████╗  ██████╗ ███████╗██████╗ 
+ ██╔══██╗██╔══██╗████╗ ████║    ╚══██╔══╝██╔══██╗██╔════╝ ██╔════╝ ██╔════╝██╔══██╗
+ ██████╔╝██████╔╝██╔████╔██║       ██║   ███████║██║  ███╗██║  ███╗█████╗  ██████╔╝
+ ██╔══██╗██╔═══╝ ██║╚██╔╝██║       ██║   ██╔══██║██║   ██║██║   ██║██╔══╝  ██╔══██╗
+ ██████╔╝██║     ██║ ╚═╝ ██║       ██║   ██║  ██║╚██████╔╝╚██████╔╝███████╗██║  ██║
+ ╚═════╝ ╚═╝     ╚═╝     ╚═╝       ╚═╝   ╚═╝  ╚═╝ ╚═════╝  ╚═════╝ ╚══════╝╚═╝  ╚═╝`,
+
+  ast2xrns: `  █████╗ ███████╗████████╗    ██████╗     ██╗  ██╗██████╗ ███╗   ██╗███████╗
+ ██╔══██╗██╔════╝╚══██╔══╝    ╚════██╗    ╚██╗██╔╝██╔══██╗████╗  ██║██╔════╝
+ ███████║███████╗   ██║        █████╔╝     ╚███╔╝ ██████╔╝██╔██╗ ██║███████╗
+ ██╔══██║╚════██║   ██║        ╚═══██╗     ██╔██╗ ██╔══██╗██║╚██╗██║╚════██║
+ ██║  ██║███████║   ██║       ██████╔╝    ██╔╝ ██╗██║  ██║██║ ╚████║███████║
+ ╚═╝  ╚═╝╚══════╝   ╚═╝       ╚═════╝     ╚═╝  ╚═╝╚═╝  ╚═╝╚═╝  ╚═══╝╚══════╝`,
+
+  flac2mp3: ` ███████╗██╗      █████╗  ██████╗    ██████╗     ███╗   ███╗██████╗  ██████╗ 
+ ██╔════╝██║     ██╔══██╗██╔════╝    ╚════██╗    ████╗ ████║██╔══██╗ ╚════██╗
+ █████╗  ██║     ███████║██║          █████╔╝    ██╔████╔██║██████╔╝  █████╔╝
+ ██╔══╝  ██║     ██╔══██║██║    ██╗   ╚═══██╗    ██║╚██╔╝██║██╔═══╝  ╚═══██╗
+ ██║     ███████╗██║  ██║╚██████╔╝   ██████╔╝    ██║ ╚═╝ ██║██║     ██████╔╝
+ ╚═╝     ╚══════╝╚═╝  ╚═╝ ╚═════╝    ╚═════╝     ╚═╝     ╚═╝╚═╝     ╚═════╝ `,
+
+  research: ` ██████╗ ███████╗███████╗███████╗ █████╗ ██████╗  ██████╗██╗  ██╗    ████████╗ ██████╗  ██████╗ ██╗     
+ ██╔══██╗██╔════╝██╔════╝██╔════╝██╔══██╗██╔══██╗██╔════╝██║  ██║    ╚══██╔══╝██╔═══██╗██╔═══██╗██║     
+ ██████╔╝█████╗  ███████╗█████╗  ███████║██████╔╝██║     ███████║       ██║   ██║   ██║██║   ██║██║     
+ ██╔══██╗██╔══╝  ╚════██║██╔══╝  ██╔══██║██╔══██╗██║     ██╔══██║       ██║   ██║   ██║██║   ██║██║     
+ ██║  ██║███████╗███████║███████╗██║  ██║██║  ██║╚██████╗██║  ██║       ██║   ╚██████╔╝╚██████╔╝███████╗
+ ╚═╝  ╚═╝╚══════╝╚══════╝╚══════╝╚═╝  ╚═╝╚═╝  ╚═╝ ╚═════╝╚═╝  ╚═╝       ╚═╝    ╚═════╝  ╚═════╝ ╚══════╝`,
+
+  fipbrowser: ` ███████╗██╗██████╗     ██████╗ ██████╗  ██████╗ ██╗    ██╗███████╗███████╗██████╗ 
+ ██╔════╝██║██╔══██╗    ██╔══██╗██╔══██╗██╔═══██╗██║    ██║██╔════╝██╔════╝██╔══██╗
+ █████╗  ██║██████╔╝    ██████╔╝██████╔╝██║   ██║██║ █╗ ██║███████╗█████╗  ██████╔╝
+ ██╔══╝  ██║██╔═══╝     ██╔══██╗██╔══██╗██║   ██║██║███╗██║╚════██║██╔══╝  ██╔══██╗
+ ██║     ██║██║         ██████╔╝██║  ██║╚██████╔╝╚███╔███╔╝███████║███████╗██║  ██║
+ ╚═╝     ╚═╝╚═╝         ╚═════╝ ╚═╝  ╚═╝ ╚═════╝  ╚══╝╚══╝ ╚══════╝╚══════╝╚═╝  ╚═╝`,
+
+  robot: ` ██████╗  ██████╗ ██████╗  ██████╗ ████████╗    █████╗ ██╗   ██╗██████╗ ██╗ ██████╗ 
+ ██╔══██╗██╔═══██╗██╔══██╗██╔═══██╗╚══██╔══╝   ██╔══██╗██║   ██║██╔══██╗██║██╔═══██╗
+ ██████╔╝██║   ██║██████╔╝██║   ██║   ██║      ███████║██║   ██║██║  ██║██║██║   ██║
+ ██╔══██╗██║   ██║██╔══██╗██║   ██║   ██║      ██╔══██║██║   ██║██║  ██║██║██║   ██║
+ ██║  ██║╚██████╔╝██████╔╝╚██████╔╝   ██║      ██║  ██║╚██████╔╝██████╔╝██║╚██████╔╝
+ ╚═╝  ╚═╝ ╚═════╝ ╚═════╝  ╚═════╝    ╚═╝      ╚═╝  ╚═╝ ╚═════╝ ╚═════╝ ╚═╝ ╚═════╝ `,
+
+  fmtx: ` ███████╗███╗   ███╗    ████████╗██████╗  █████╗ ███╗   ██╗███████╗███╗   ███╗██╗████████╗████████╗███████╗██████╗ 
+ ██╔════╝████╗ ████║    ╚══██╔══╝██╔══██╗██╔══██╗████╗  ██║██╔════╝████╗ ████║██║╚══██╔══╝╚══██╔══╝██╔════╝██╔══██╗
+ █████╗  ██╔████╔██║       ██║   ██████╔╝███████║██╔██╗ ██║███████╗██╔████╔██║██║   ██║      ██║   █████╗  ██████╔╝
+ ██╔══╝  ██║╚██╔╝██║       ██║   ██╔══██╗██╔══██║██║╚██╗██║╚════██║██║╚██╔╝██║██║   ██║      ██║   ██╔══╝  ██╔══██╗
+ ██║     ██║ ╚═╝ ██║       ██║   ██║  ██║██║  ██║██║ ╚████║███████║██║ ╚═╝ ██║██║   ██║      ██║   ███████╗██║  ██║
+ ╚═╝     ╚═╝     ╚═╝       ╚═╝   ╚═╝  ╚═╝╚═╝  ╚═╝╚═╝  ╚═══╝╚══════╝╚═╝     ╚═╝╚═╝   ╚═╝      ╚═╝   ╚══════╝╚═╝  ╚═╝`,
 };
 
 // ── PROJECT DATA ─────────────────────────────────────────────────
@@ -460,7 +503,7 @@ const TREE = [
   { id:'osborn', label:'OSBORN_INDUSTRIES', type:'root', created:'01-01-2023', modified:'05-04-2026', children:[
     { id:'android', label:'ANDROID', type:'folder', created:'01-01-2023', modified:'05-04-2026', children:[
       {
-        id:'slitherlink', label:'SLITHERLINK.APK', type:'project', ascii:'app',
+        id:'slitherlink', label:'SLITHERLINK.APK', type:'project', ascii:'slitherlink',
         img:'img/slitherlink.jpg',
         desc:'Slitherlink: Logic Loop Puzzle is an Android puzzle game based on the classic Nikoli grid logic format. Players draw a single closed loop on a grid using number clues that indicate how many of a cell\'s sides are part of the loop. Built in Kotlin with Jetpack Compose for the UI, Room for puzzle/progress persistence, and a custom canvas renderer for the interactive grid. Ships with 150 fully unique puzzles hand-coded across four difficulty tiers — no procedural generation, every puzzle individually authored and validated for uniqueness and solvability.\n\nThe core challenge was building a constraint-accurate puzzle validator — the loop must be a single continuous closed path with no branches or crossings, requiring a graph traversal check on every move. Pinch-to-zoom on the canvas required careful handling of simultaneous touch events alongside the tap-to-draw gesture, with a custom GestureDetector subclass to disambiguate. The in-app authoring tool lets puzzles be constructed and validated before export to the bundled JSON puzzle bank. ProGuard broke Gson deserialization post-minification, fixed by adding keep rules for all data model classes.',
         tags:['Android','Kotlin','Jetpack Compose','Room','Play Store','Puzzle'],
@@ -469,7 +512,7 @@ const TREE = [
         link:'https://play.google.com/store/apps/details?id=com.osbornindustries.slitherlink'
       },
       {
-        id:'oot', label:'OOT_COMPANION.APK', type:'project', ascii:'game',
+        id:'oot', label:'OOT_COMPANION.APK', type:'project', ascii:'oot',
         img:'img/oot.jpg',
         desc:'A personal Android companion app for a 100% Ocarina of Time playthrough. Built in Kotlin with Jetpack Compose, Room (via KSP), and Hilt for dependency injection. Features a live dashboard, SVG dungeon maps rendered via androidsvg, a songs reference tab, a full 100% checklist with completion state, progressive hint reveal per item, and full JSON backup/restore.\n\nThe build configuration was the main war — getting KSP, Kotlin, AGP, and Hilt versions all compatible required careful version locking. SVG rendering for the dungeon maps needed androidsvg since Compose has no native SVG support; integrating it as a Composable required wrapping it in an AndroidView. The hint system stores reveal state per checklist item in Room, with a simple integer reveal level that increments on tap. JSON backup serializes the entire Room database state to a single file for export/import.',
         tags:['Android','Kotlin','Jetpack Compose','Room','Hilt'],
@@ -478,7 +521,7 @@ const TREE = [
         link:null
       },
       {
-        id:'hyperion', label:'HYPERION_FIELD.APK', type:'project', ascii:'app',
+        id:'hyperion', label:'HYPERION_FIELD.APK', type:'project', ascii:'hyperion',
         img:'img/hyperion.jpg',
         desc:'A mobile sales field tool built for Hyperion Coffee, a specialty roaster in the Ann Arbor area. Delivered as a standalone Android APK built with Capacitor wrapping a web frontend. Six tabs: accounts (customer CRM), pipeline (deal tracking), roast data (origin/profile reference), catalog (SKU browser), Google Maps scouting, and CSV export.\n\nThe Maps scouting tab is a core workflow tool — reps in the field can search a radius around their current location for cafes, restaurants, and food service businesses not yet in the accounts tab, pulling live Places API results and flagging existing accounts on the map. This turns cold prospecting into a GPS-driven workflow directly from the field. Using Capacitor allowed rapid development in HTML/CSS/JS while still producing a native APK. The Maps tab uses the Maps JavaScript API inside a Capacitor WebView, requiring correct CSP headers and API key restrictions. Data persistence uses localStorage bridged through a Capacitor plugin, keeping the tool fully self-contained with no backend dependency.',
         tags:['Android','Capacitor','Client Work','Coffee','Google Maps','Places API'],
@@ -487,7 +530,7 @@ const TREE = [
         link:null
       },
       {
-        id:'hfspaces', label:'HF_SPACES.APK', type:'project', ascii:'ai',
+        id:'hfspaces', label:'HF_SPACES.APK', type:'project', ascii:'hfspaces',
         img:'img/hfspaces.jpg',
         desc:'An Android wrapper for two private HuggingFace Spaces — a Qwen-based 3D image viewer and an AudioSR audio super-resolution upscaler. The app authenticates with HuggingFace, maintains a persistent session, and loads each Space in a WebView with injected credentials. Built with a GitHub Actions workflow as the build environment, removing the need for a local Android Studio setup.\n\nThe main technical challenge was persistent HF login inside a WebView — HuggingFace uses cookie-based auth, so the solution was to intercept the login flow, capture the session cookie, and re-inject it on subsequent loads using CookieManager. The GitHub Actions build pipeline uses the Android SDK Docker image, caches Gradle dependencies between runs, and produces a signed APK as a build artifact.',
         tags:['Android','HuggingFace','GitHub Actions','AI','AudioSR','WebView'],
@@ -496,7 +539,7 @@ const TREE = [
         link:null
       },
       {
-        id:'bitrateVerifier', label:'BITRATE_VERIFIER.APK', type:'project', ascii:'audio',
+        id:'bitrateVerifier', label:'BITRATE_VERIFIER.APK', type:'project', ascii:'bitrateVerifier',
         img:'img/bitrateVerifier.jpg',
         desc:'A cross-platform audio analysis tool that detects fake bitrates and transcodes by analyzing decoded PCM spectral content rather than metadata tags. A 320kbps MP3 re-encoded from a 128kbps source will be identified as a transcode — metadata lies, spectrograms don\'t. Ships as both a Windows EXE (Python/Flask + pywebview) and an Android APK (Flask via Chaquopy inside a WebView shell), sharing the same index.html frontend and core analysis logic.\n\nThe detection engine performs spectral cutoff analysis via STFT, finding the brick-wall frequency above which the encoder discarded content. A critical design decision: using min() not max() for the detection threshold — high-bitrate files have a very low noise floor (~-68dB) and the stricter threshold would incorrectly reject valid high-frequency content. Validated across 64k through 320k with sub-1kHz accuracy.\n\nAndroid introduced compounding obstacles. SELinux blocks all subprocess execution — the bundled static ffmpeg binary is completely unusable on Android, so audio decoding was replaced entirely with Android\'s native MediaExtractor and MediaCodec Java APIs called from Python via Chaquopy. ByteBuffer objects from MediaCodec cannot be directly cast to Python bytes — must copy through a Python-owned bytearray. librosa is unavailable for ARM via Chaquopy\'s package index, so every call was replaced with pure numpy/scipy equivalents. Chaquopy 17 moved its Gradle DSL to a new top-level block, breaking older configs. numpy/scipy version conflicts required unpinning both and letting pip resolve compatible prebuilt ARM wheels.',
         tags:['Android','Windows','Python','Flask','Chaquopy','DSP','Audio','numpy','scipy'],
@@ -507,7 +550,7 @@ const TREE = [
     ]},
     { id:'windows', label:'WINDOWS', type:'folder', created:'01-01-2023', modified:'05-04-2026', children:[
       {
-        id:'bpmtagger', label:'BPM_TAGGER.EXE', type:'project', ascii:'audio',
+        id:'bpmtagger', label:'BPM_TAGGER.EXE', type:'project', ascii:'bpmtagger',
         img:'img/bpmtagger.jpg',
         desc:'A Windows desktop tool for BPM detection and MP3 tag writing. Custom numpy/scipy five-band filterbank replaces librosa for speed and portability — audio is decoded via ffmpeg, split into frequency bands, onset envelopes computed per band, and a weighted autocorrelation finds the dominant tempo. The custom filterbank kept the final EXE under 40MB versus 120MB+ with librosa\'s dependency tree. Bundled as a standalone EXE with embedded ffmpeg via PyInstaller — no install required.\n\nThe main PyInstaller challenge was bundling the ffmpeg binary and making it accessible at runtime via sys._MEIPASS. Batch processing runs each file in a thread pool to keep the UI responsive during large folder scans.',
         tags:['Windows','Python','PyInstaller','Audio','MP3','ffmpeg','numpy','scipy'],
@@ -516,7 +559,7 @@ const TREE = [
         link:null
       },
       {
-        id:'ast2xrns', label:'AST2XRNS.EXE', type:'project', ascii:'tool',
+        id:'ast2xrns', label:'AST2XRNS.EXE', type:'project', ascii:'ast2xrns',
         img:'img/ast2xrns.jpg',
         desc:'A converter for All Sound Tracker (AST) files — a DOS-era tracker format built around the EMU8000 ISA sound card (the DSP chip in the Sound Blaster AWE32/AWE64). Sample data is stored in the card\'s onboard RAM format and instrument parameters map directly to EMU8000 hardware registers. Parsing required reversing the binary format against EMU8000 DSP documentation and original Turbo Pascal source code from the tracker itself — Pascal\'s typed file I/O and record structures were mapped manually to Python struct unpack calls. Output is a valid Renoise .xrns project, built as a ZIP archive of XML and sample data using Python\'s zipfile and xml.etree modules.\n\nThree major bugs required deep investigation: (1) Pitch sharpness — a hidden Finetune field in the skeleton template defaulted to a non-zero value, causing all notes to play sharp. (2) Tempo drift — a 239/240 correction factor compensates for a frame-rate mismatch between AST\'s timing model and Renoise\'s BPM engine, discovered by comparing tick-accurate exports against hardware playback recordings. (3) SHABS8 sample corruption — certain samples are hardware-decoded by the EMU8000 and cannot be read as standard PCM; fixed with a WAV override feature that substitutes a user-provided WAV for any corrupt sample. The GUI embeds the skeleton.xrns template as a base64 blob for a fully self-contained EXE.',
         tags:['Windows','Python','Renoise','Tracker','Audio','EMU8000','AST','Turbo Pascal'],
@@ -525,7 +568,7 @@ const TREE = [
         link:null
       },
       {
-        id:'flac2mp3', label:'FLAC_TO_MP3.EXE', type:'project', ascii:'audio',
+        id:'flac2mp3', label:'FLAC_TO_MP3.EXE', type:'project', ascii:'flac2mp3',
         img:'img/flac2mp3.jpg',
         desc:'A batch FLAC-to-MP3 desktop converter for Windows. Python/tkinter frontend, ffmpeg backend, PyInstaller bundle. Drag-and-drop a folder or individual files, set bitrate, convert. Greyscale Osborn Industries branding.\n\nOne non-obvious PyInstaller issue: ffmpeg must be bundled as a binary and extracted to a temp directory at runtime via sys._MEIPASS. Drag-and-drop uses tkinterdnd2, which requires a specific PyInstaller hook to copy the native DLL into the build. ID3 tags are preserved from the source FLAC using ffmpeg\'s -map_metadata flag.',
         tags:['Windows','Python','ffmpeg','Audio','FLAC','PyInstaller','tkinter'],
@@ -536,7 +579,7 @@ const TREE = [
     ]},
     { id:'web', label:'WEB', type:'folder', created:'01-01-2024', modified:'05-04-2026', children:[
       {
-        id:'research', label:'RESEARCH_TOOL.HTML', type:'project', ascii:'ai',
+        id:'research', label:'RESEARCH_TOOL.HTML', type:'project', ascii:'research',
         img:'img/research.jpg',
         desc:'A single-file browser-based research analysis tool. Paste or upload a document (PDF, DOCX, plain text) and the tool uses the Claude API to extract claims from the text, then queries Semantic Scholar for supporting or contradicting literature for each claim. Results are displayed with color-coded evidence classification (supporting, contradicting, neutral).\n\nThe entire tool is a single HTML file with no build step — all logic is vanilla JS. PDF parsing uses pdf.js from CDN; DOCX parsing uses mammoth.js. The Claude API call uses a structured prompt returning JSON claim objects, fed one-by-one to the Semantic Scholar API. The main engineering challenge was rate-limiting Semantic Scholar requests and handling partial failures gracefully — the UI shows results progressively as each claim resolves rather than waiting for all of them.',
         tags:['HTML','Claude API','Semantic Scholar','PDF','DOCX','Research','Vanilla JS'],
@@ -545,7 +588,7 @@ const TREE = [
         link:null
       },
       {
-        id:'fipbrowser', label:'FIP_BROWSER.HTML', type:'project', ascii:'ai',
+        id:'fipbrowser', label:'FIP_BROWSER.HTML', type:'project', ascii:'fipbrowser',
         img:'img/fipbrowser.jpg',
         desc:'A single-file HTML/JS application for browsing track history from FIP Radio (Radio France) and its 12 themed sub-stations — Rock, Jazz, Pop, Metal, Groove, Electro, Monde, Reggae, Nouveautés, Hip-Hop, Cultes, and the main FIP channel. Displays now-playing, recent history, play counts, album art, and YouTube search links. No backend, no build step, no dependencies. Built after applying to the Radio France developer program and being accepted — the authenticated OpenAPI token for historical data queries was obtained through that process.\n\nTwo distinct APIs power the tool. The livemeta REST endpoint provides unauthenticated live now-playing data polled every 30 seconds. The Radio France Open API is an authenticated GraphQL endpoint used for 7-day historical data via the grid query. Track cache persists to localStorage with a 2-hour stale threshold; play counts use a 60-minute repeat guard to prevent the same track incrementing on every poll cycle.\n\nSchema discovery required GraphQL introspection since the API is sparsely documented. Station integer IDs for the livemeta endpoint were reverse-engineered by parsing the UUID suffix from TrackStep.id — revealing FIP_METAL as station 77 (not 143 as guessed) and FIP_CULTES as 709. FIP_POP and FIP_CULTES have no livemeta support despite valid IDs and fall back to the OpenAPI live query.\n\nSeveral dead ends before the working architecture was confirmed. fip.fr\'s own GraphQL endpoint uses Automatic Persisted Queries with a SHA-256 hash that rotates with every SvelteKit frontend deploy — returned HTTP 410 Gone mid-development. api.radiofrance.fr/v1/graphql has CORS locked server-side, returning 401 with no CORS headers, unusable from any browser context regardless of token. An intermediate approach scraped FIP\'s website directly, which uses SvelteKit\'s deduplication serialization — a flat JSON array where integers are back-references to earlier indices rather than nested objects. A full resolver was written to expand this format before the approach was abandoned once the authenticated OpenAPI endpoint was confirmed working.',
         tags:['HTML','Vanilla JS','GraphQL','REST','Radio France','FIP','localStorage','GitHub Pages'],
@@ -556,7 +599,7 @@ const TREE = [
     ]},
     { id:'hardware', label:'HARDWARE', type:'folder', created:'01-01-2023', modified:'05-04-2026', children:[
       {
-        id:'robot', label:'ROBOT_AUDIO_ARRAY', type:'project', ascii:'hw',
+        id:'robot', label:'ROBOT_AUDIO_ARRAY', type:'project', ascii:'robot',
         img:'img/robot.jpg',
         desc:'A dog-platform robot equipped with a custom beamforming microphone array and a directional speaker-tracking display. Client robotics and audio project. The microphone array uses time-difference-of-arrival (TDOA) across multiple mics to estimate the azimuth of a sound source in real time, with a radial display showing estimated source direction updating live.\n\nThe DSP pipeline runs on an embedded Linux board, cross-compiled for ARM with a custom CMake toolchain file. The beamforming algorithm uses generalized cross-correlation with phase transform (GCC-PHAT) for TDOA estimation, which is more robust to reverberation than raw cross-correlation. Latency was the core challenge — the pipeline must process audio frames fast enough to track a moving speaker, requiring careful buffer sizing and ALSA configuration to minimize capture latency.',
         tags:['Hardware','DSP','Beamforming','GCC-PHAT','TDOA','Robotics','Embedded Linux','Client Work'],
@@ -565,7 +608,7 @@ const TREE = [
         link:null
       },
       {
-        id:'fmtx', label:'FM_TRANSMITTER.PCB', type:'project', ascii:'hw',
+        id:'fmtx', label:'FM_TRANSMITTER.PCB', type:'project', ascii:'fmtx',
         img:'img/fmtx.jpg',
         desc:'A DIY solar-powered autonomous FM radio transmitter designed for unattended outdoor deployment. FCC Part 15 compliant (under 250μV/m at 3m). Plays MP3s from an SD card on a loop with no user interaction. Custom PCB designed in KiCad.\n\nThe RF stage uses a PLL-based FM modulator IC with a low-pass filter on the audio input to keep pre-emphasis correct. The microcontroller reads FAT32 from the SD card using FatFs, decodes MP3 via the VS1053 codec chip, and feeds audio to the modulator. Power management is the most complex part — a LiPo battery is charged via a solar MPPT controller, with the MCU monitoring battery voltage and entering deep sleep during low-light periods to prevent over-discharge. PCB layout required careful separation of the RF section from the digital section to prevent noise coupling into the antenna.',
         tags:['Hardware','PCB','Solar','FM','FCC Part 15'],
@@ -680,7 +723,7 @@ function placeholderSvg(label) {
 // ── RENDER PROJECT ────────────────────────────────────────────────
 function renderProject(node) {
   const sc = STATUS_C[node.status] || '#00cc44';
-  const asciiArt = ASCII[node.ascii] || ASCII.app;
+  const asciiArt = ASCII[node.ascii] || Object.values(ASCII)[0];
   const imgSrc = node.img || '';
   const fallback = placeholderSvg(node.label);
 
