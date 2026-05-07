@@ -497,6 +497,13 @@ const ASCII = {
  ███████║╚██████╔╝╚██████╔╝███████╗███████║███████╗███████╗██║  ██╗
  ╚══════╝ ╚═════╝  ╚═════╝ ╚══════╝╚══════╝╚══════╝╚══════╝╚═╝  ╚═╝`,
 
+  likecounter: ` ██╗     ██╗██╗  ██╗███████╗     ██████╗ ██████╗ ██╗   ██╗███╗   ██╗████████╗███████╗██████╗ 
+ ██║     ██║██║ ██╔╝██╔════╝    ██╔════╝██╔═══██╗██║   ██║████╗  ██║╚══██╔══╝██╔════╝██╔══██╗
+ ██║     ██║█████╔╝ █████╗      ██║     ██║   ██║██║   ██║██╔██╗ ██║   ██║   █████╗  ██████╔╝
+ ██║     ██║██╔═██╗ ██╔══╝      ██║     ██║   ██║██║   ██║██║╚██╗██║   ██║   ██╔══╝  ██╔══██╗
+ ███████╗██║██║  ██╗███████╗    ╚██████╗╚██████╔╝╚██████╔╝██║ ╚████║   ██║   ███████╗██║  ██║
+ ╚══════╝╚═╝╚═╝  ╚═╝╚══════╝     ╚═════╝ ╚═════╝  ╚═════╝ ╚═╝  ╚═══╝   ╚═╝   ╚══════╝╚═╝  ╚═╝`,
+
   fmtx: ` ███████╗███╗   ███╗    ████████╗██████╗  █████╗ ███╗   ██╗███████╗███╗   ███╗██╗████████╗████████╗███████╗██████╗ 
  ██╔════╝████╗ ████║    ╚══██╔══╝██╔══██╗██╔══██╗████╗  ██║██╔════╝████╗ ████║██║╚══██╔══╝╚══██╔══╝██╔════╝██╔══██╗
  █████╗  ██╔████╔██║       ██║   ██████╔╝███████║██╔██╗ ██║███████╗██╔████╔██║██║   ██║      ██║   █████╗  ██████╔╝
@@ -534,6 +541,15 @@ const TREE = [
         tags:['Android','Capacitor','Client Work','Coffee','Google Maps','Places API'],
         status:'DELIVERED', platform:'Android', size:'11.1 MB',
         created:'03-05-2024', modified:'04-12-2024', ver:'2.0.0',
+        link:null
+      },
+      {
+        id:'likecounter', label:'LIKE_COUNTER.APK', type:'project', ascii:'likecounter',
+        img:'img/likecounter.jpg',
+        desc:'Real-time filler word detection for Android. Tap start, pocket your phone, and let it run. Every "like" gets counted, logged, and timestamped — even with the screen off.\n\nContinuous recognition — Uses Android\'s SpeechRecognizer API with auto-restart on every result, running indefinitely without manual intervention. A foreground service combined with a wake lock keeps recognition alive when the display sleeps, making it practical for long conversations or meetings.\n\nHaptic feedback — Optional 60ms pulse on each detection, toggleable on or off mid-session. Export shares a full session transcript with every "like" highlighted, plus counts, WPM rate, percentage of words, and session stats via FileProvider.\n\nThe core challenge was keeping SpeechRecognizer alive continuously — Android\'s implementation stops after each utterance and requires explicit restart. The foreground service handles restart logic and ensures the AudioManager focus is held correctly across screen-off cycles. WakeLock prevents the CPU from sleeping between recognitions which would drop detections silently.',
+        tags:['Android','Kotlin','Jetpack Compose','SpeechRecognizer','ForegroundService','WakeLock','AudioManager','FileProvider'],
+        status:'LIVE', platform:'Android 8+', size:'—',
+        created:'03-01-2026', modified:'05-01-2026', ver:'1.0.0',
         link:null
       },
       {
