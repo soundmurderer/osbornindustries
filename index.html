@@ -504,12 +504,12 @@ const ASCII = {
  ███████╗██║██║  ██╗███████╗    ╚██████╗╚██████╔╝╚██████╔╝██║ ╚████║   ██║   ███████╗██║  ██║
  ╚══════╝╚═╝╚═╝  ╚═╝╚══════╝     ╚═════╝ ╚═════╝  ╚═════╝ ╚═╝  ╚═══╝   ╚═╝   ╚══════╝╚═╝  ╚═╝`,
 
-  taillookup: ` ████████╗ █████╗ ██╗██╗          ██╗      ██████╗  ██████╗ ██╗  ██╗██╗   ██╗██████╗ 
- ╚══██╔══╝██╔══██╗██║██║          ██║     ██╔═══██╗██╔═══██╗██║ ██╔╝██║   ██║██╔══██╗
-    ██║   ███████║██║██║          ██║     ██║   ██║██║   ██║█████╔╝ ██║   ██║██████╔╝
-    ██║   ██╔══██║██║██║          ██║     ██║   ██║██║   ██║██╔═██╗ ██║   ██║██╔═══╝ 
-    ██║   ██║  ██║██║███████╗     ███████╗╚██████╔╝╚██████╔╝██║  ██╗╚██████╔╝██║     
-    ╚═╝   ╚═╝  ╚═╝╚═╝╚══════╝     ╚══════╝ ╚═════╝  ╚═════╝ ╚═╝  ╚═╝ ╚═════╝ ╚═╝     `,
+  flightlogtoolkit: ` ███████╗██╗     ██╗ ██████╗ ██╗  ██╗████████╗    ██╗      ██████╗  ██████╗     ████████╗██╗  ██╗
+ ██╔════╝██║     ██║██╔════╝ ██║  ██║╚══██╔══╝    ██║     ██╔═══██╗██╔════╝     ╚══██╔══╝██║ ██╔╝
+ █████╗  ██║     ██║██║  ███╗███████║   ██║       ██║     ██║   ██║██║  ███╗       ██║   █████╔╝ 
+ ██╔══╝  ██║     ██║██║   ██║██╔══██║   ██║       ██║     ██║   ██║██║   ██║       ██║   ██╔═██╗ 
+ ██║     ███████╗██║╚██████╔╝██║  ██║   ██║       ███████╗╚██████╔╝╚██████╔╝       ██║   ██║  ██╗
+ ╚═╝     ╚══════╝╚═╝ ╚═════╝ ╚═╝  ╚═╝   ╚═╝       ╚══════╝ ╚═════╝  ╚═════╝        ╚═╝   ╚═╝  ╚═╝`,
 
   fmtx: ` ███████╗███╗   ███╗    ████████╗██████╗  █████╗ ███╗   ██╗███████╗███╗   ███╗██╗████████╗████████╗███████╗██████╗ 
  ██╔════╝████╗ ████║    ╚══██╔══╝██╔══██╗██╔══██╗████╗  ██║██╔════╝████╗ ████║██║╚══██╔══╝╚══██╔══╝██╔════╝██╔══██╗
@@ -607,12 +607,12 @@ const TREE = [
         link:null
       },
       {
-        id:'taillookup', label:'TAIL_LOOKUP.PY', type:'project', ascii:'taillookup',
-        img:'img/taillookup.jpg',
-        desc:'A command-line tool that ingests crew schedule or flight log PDFs and enriches each revenue leg with its aircraft tail number and type, sourced from the FlightAware AeroAPI. The output is a new PDF matching the original layout with two added columns. Works for any airline, any route, any aircraft type — historical data back to 2011.\n\nPipeline: pdfplumber parses the schedule table from the input PDF, extracting flight numbers, dates, origin, and destination per leg. Each revenue leg is queued for an AeroAPI lookup using the ICAO carrier code and flight number. The enriched rows — now including tail number and aircraft type — are passed to reportlab to regenerate the PDF in the original layout with two new columns appended.\n\nDeadhead and positioning legs are detected and skipped automatically to avoid unnecessary API calls. Response caching keeps API costs low across multi-month log batches by storing prior lookups and reusing them on re-runs. Requires FlightAware AeroAPI Standard tier for historical data access. Tail number coverage varies by carrier — ADS-B adoption was gradual pre-2014 so older legs may return partial data.',
-        tags:['Python','CLI','pdfplumber','reportlab','FlightAware','AeroAPI','ADS-B','PDF','Aviation'],
+        id:'flightlogtoolkit', label:'FLIGHT_LOG_TOOLKIT.PY', type:'project', ascii:'flightlogtoolkit',
+        img:'img/flightlogtoolkit.jpg',
+        desc:'A suite of command-line tools that enrich airline crew schedule PDFs with data not present in the original documents — tail numbers, FAA night flying time, and logbook-ready landing counts. Works with any carrier and any route, historical data back to 2011.\n\ntail_lookup.py — Fetches tail numbers and aircraft types from the FlightAware AeroAPI for each revenue leg, then outputs an enriched PDF matching the original layout with two new columns appended.\n\ninfer_tails.py — Fills pre-ADS-B coverage gaps by cross-referencing flight numbers across confirmed tail records. Where AeroAPI returns no data (common pre-2013), the tool infers the most likely tail from overlapping routes and dates across the full log batch.\n\nadd_night.py — Computes FAA night hours per leg from Zulu departure/arrival times and airport coordinates using the NOAA solar algorithm — no external API or library required. Night begins/ends at official sunset/sunrise at the departure and arrival airports respectively.\n\nadd_landings.py — Adds day and night landing columns in standard logbook format, derived from the computed night time windows.\n\nThroughout all tools: deadhead and positioning legs are detected and excluded automatically. AeroAPI response caching keeps costs low across multi-month batches. Requires FlightAware AeroAPI Standard tier for historical tail data.',
+        tags:['Python','CLI','pdfplumber','reportlab','openpyxl','FlightAware','AeroAPI','ADS-B','FAA','Aviation','NOAA'],
         status:'PERSONAL', platform:'Python / CLI', size:'—',
-        created:'11-10-2024', modified:'02-20-2025', ver:'1.0.0',
+        created:'11-10-2024', modified:'04-15-2026', ver:'2.0.0',
         link:null
       },
       {
