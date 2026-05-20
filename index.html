@@ -511,6 +511,13 @@ const ASCII = {
  ██║     ███████╗██║╚██████╔╝██║  ██║   ██║       ███████╗╚██████╔╝╚██████╔╝       ██║   ██║  ██╗
  ╚═╝     ╚══════╝╚═╝ ╚═════╝ ╚═╝  ╚═╝   ╚═╝       ╚══════╝ ╚═════╝  ╚═════╝        ╚═╝   ╚═╝  ╚═╝`,
 
+  barintelligence: ` ██████╗  █████╗ ██████╗     ██╗███╗   ██╗████████╗███████╗██╗     ██╗     ██╗ ██████╗ ███████╗███╗   ██╗ ██████╗███████╗
+ ██╔══██╗██╔══██╗██╔══██╗    ██║████╗  ██║╚══██╔══╝██╔════╝██║     ██║     ██║██╔════╝ ██╔════╝████╗  ██║██╔════╝██╔════╝
+ ██████╔╝███████║██████╔╝    ██║██╔██╗ ██║   ██║   █████╗  ██║     ██║     ██║██║  ███╗█████╗  ██╔██╗ ██║██║     █████╗  
+ ██╔══██╗██╔══██║██╔══██╗    ██║██║╚██╗██║   ██║   ██╔══╝  ██║     ██║     ██║██║   ██║██╔══╝  ██║╚██╗██║██║     ██╔══╝  
+ ██████╔╝██║  ██║██║  ██║    ██║██║ ╚████║   ██║   ███████╗███████╗███████╗██║╚██████╔╝███████╗██║ ╚████║╚██████╗███████╗
+ ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝    ╚═╝╚═╝  ╚═══╝   ╚═╝   ╚══════╝╚══════╝╚══════╝╚═╝ ╚═════╝ ╚══════╝╚═╝  ╚═══╝ ╚═════╝╚══════╝`,
+
   fmtx: ` ███████╗███╗   ███╗    ████████╗██████╗  █████╗ ███╗   ██╗███████╗███╗   ███╗██╗████████╗████████╗███████╗██████╗ 
  ██╔════╝████╗ ████║    ╚══██╔══╝██╔══██╗██╔══██╗████╗  ██║██╔════╝████╗ ████║██║╚══██╔══╝╚══██╔══╝██╔════╝██╔══██╗
  █████╗  ██╔████╔██║       ██║   ██████╔╝███████║██╔██╗ ██║███████╗██╔████╔██║██║   ██║      ██║   █████╗  ██████╔╝
@@ -633,6 +640,15 @@ const TREE = [
         tags:['HTML','Claude API','Semantic Scholar','PDF','DOCX','Research','Vanilla JS'],
         status:'INTERNAL', platform:'Browser', size:'0.9 MB',
         created:'10-05-2024', modified:'01-20-2025', ver:'1.2.0',
+        link:null
+      },
+      {
+        id:'barintelligence', label:'BAR_INTELLIGENCE.WEB', type:'project', ascii:'barintelligence',
+        img:'img/barintelligence.jpg',
+        desc:'A private, self-hosted analytics platform built for bar operators — connecting point-of-sale data, spirits pricing databases, and recipe management into a single operational view. 40,000+ POS records processed, 13,000+ spirits in the pricing database, 1,500+ recipes in the library.\n\nPOS data ingestion — Nightly automated SFTP pull from the point-of-sale system via paramiko. Items are auto-categorized on import using a learned mapping table that improves with each sync cycle.\n\nIngredient linking — Recipes are linked to spirits in the state liquor control (MLCC) database by MLCC code, giving exact wholesale cost per pour. Non-MLCC ingredients are tracked in a custom cost table.\n\nReal-time costing — Every drink sold is matched to its recipe spec. Pour cost percentage, gross margin, and suggested pricing update dynamically across all views. The spec simulator lets operators look up any spirit by state liquor code, adjust pour size, and instantly see cost and minimum menu price.\n\nOperational views — Daily/weekly/monthly performance, staff metrics, menu engineering, and spec simulator on the main dashboard. A separate tablet-optimized subdomain serves as a read-only recipe reference for floor staff — search, collection filters, full spec view, no financial data exposed.\n\nStack: Python/Flask backend, SQLite, Vanilla JS + Chart.js frontend, deployed on a DigitalOcean VPS behind nginx + gunicorn with Let\'s Encrypt SSL.',
+        tags:['Python','Flask','SQLite','Vanilla JS','Chart.js','DigitalOcean','nginx','SFTP','paramiko','MLCC','Analytics'],
+        status:'PERSONAL', platform:'Web / Self-hosted VPS', size:'—',
+        created:'06-01-2024', modified:'05-01-2026', ver:'1.0.0',
         link:null
       },
       {
